@@ -15,9 +15,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install Dependencies
-        run: |
-          apt install -y bash coreutils libc-bin libc6:amd64 libpython3.9-minimal:amd64 locales python3.9-minimal tzdata
+      # - name: Install Dependencies
+      #   run: |
+      #     apt install -y bash coreutils libc-bin libc6:amd64 libpython3.9-minimal:amd64 locales python3.9-minimal tzdata
       - run: |
           cd ivy
       - run: |
