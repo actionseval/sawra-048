@@ -16,10 +16,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install Dependencies
-        run: |
-          cd ivy
+          python-version: ${{ matrix.python-version }}     
       - run: |
+          cd ivy
           version=$(python -c "exec(open('ivy/_version.py').read()); print(__version__)")
           scripts/shell/test_build.sh "$version"
