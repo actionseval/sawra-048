@@ -19,7 +19,7 @@ jobs:
       #   run: |
       #     apt install -y bash coreutils libc-bin libc6:amd64 libpython3.9-minimal:amd64 locales python3.9-minimal tzdata
       - run: |
-          cd ivy
+          # cd ivy
           version=$(python -c "exec(open('ivy/_version.py').read()); print(__version__)")
           scripts/shell/test_build.sh "$version"
     env: {}
