@@ -1,0 +1,26 @@
+name: python-build
+# on: push
+on: [repository_dispatch, workflow_dispatch]
+jobs:
+  test-build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+        python-version:
+          - '3.9'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Dependencies
+        run: |
+          apt install -y bash coreutils libc-bin libc6:amd64 libpython3.9-minimal:amd64 locales python3.9-minimal tzdata
+      - run: |
+          cd ivy
+      - run: |
+          version=$(python -c "exec(open('ivy/_version.py').read()); print(__version__)")
+          scripts/shell/test_build.sh "$version"
+    env: {}

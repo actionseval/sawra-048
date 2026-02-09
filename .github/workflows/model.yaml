@@ -1,0 +1,27 @@
+name: CI Workflow
+
+# on: [push, pull_request]
+on: [repository_dispatch, workflow_dispatch]
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements/requirements.txt
+          pip install -r requirements/optional.txt
+
+      - name: Run test-build script
+        run: |
+          cd ivy
+          version=$(python -c "exec(open('ivy/_version.py').read()); print(__version__)")
+          scripts/shell/test_build.sh "$version"

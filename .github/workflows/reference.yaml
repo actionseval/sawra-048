@@ -1,0 +1,45 @@
+name: python-build
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+#   workflow_dispatch:
+on: [repository_dispatch, workflow_dispatch]
+
+jobs:
+  test-build:
+    # SAWRA >> USE_MATRIX
+    # runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    # SAWRA >> USE_MATRIX
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+        os: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ivy
+          persist-credentials: false
+
+      - uses: actions/setup-python@v3
+        with:
+          # SAWRA >> USE_MATRIX
+          # python-version: "3.12"
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Dependencies
+        run: |
+          cd ivy
+          python3 -m pip install -U -r requirements/requirements.txt
+          python3 -m pip install -U -r requirements/optional.txt
+
+      - name: Run Build Test
+        run: |
+          cd ivy
+          version=$(python -c "exec(open('ivy/_version.py').read()); print(__version__)")
+          scripts/shell/test_build.sh "$version"
