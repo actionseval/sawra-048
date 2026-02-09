@@ -15,13 +15,13 @@ jobs:
         with:
           python-version: '3.8'
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements/requirements.txt
-          pip install -r requirements/optional.txt
+      # - name: Install dependencies
+      #   run: |
+      #     pip install -r requirements/requirements.txt
+      #     pip install -r requirements/optional.txt
 
       - name: Run test-build script
         run: |
-          cd ivy
+          # cd ivy
           version=$(python -c "exec(open('ivy/_version.py').read()); print(__version__)")
           scripts/shell/test_build.sh "$version"
