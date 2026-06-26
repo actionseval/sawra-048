@@ -16,8 +16,8 @@ jobs:
       - name: Run test build
         run: |
           # apt install -y bash coreutils libc-bin libc6:amd64 libpython3.9-minimal:amd64 locales python3.9-minimal tzdata
-          cd ivy
           python3 -m pip install -U -r requirements/requirements.txt
           python3 -m pip install -U -r requirements/optional.txt
+          cd ivy
           version=$(python -c "exec(open('ivy/_version.py').read()); print(__version__)")
           scripts/shell/test_build.sh "$version"
